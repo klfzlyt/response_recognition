@@ -15,42 +15,7 @@
 		<script type="text/javascript" src="js/usernamecheck.js"></script>
 		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script>
-			wx.config({
-				//'scanQRCode'
-				//'closeWindow'
-				debug: false,
-				appId: '<?php echo $signPackage["appId"];?>',
-				timestamp: <?php echo $signPackage["timestamp"];?>,
-				nonceStr: '<?php echo $signPackage["nonceStr"];?>',
-				signature: '<?php echo $signPackage["signature"];?>',
-				jsApiList: ['scanQRCode', 'closeWindow'
-					// 所有要调用的 API 都要加到这个列表中
-				]
-			});
-			wx.ready(function() {
-				// 在这里调用 API
-				<?php
-							  if($isamdin==true)
-							  {
-									echo  "wx.scanQRCode({\r\n";
-									echo "needResult:1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，\r\n";
-									echo "scanType: [\"qrCode\",\"barCode\"], // 可以指定扫二维码还是一维码，默认二者都有\r\n";
-									echo "success: function (res) {\r\n";
-									echo "var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果\r\n";
-									echo "var ob=JSON.parse(result);\r\n";
-									echo "$('#txt1').val(ob.username);}\r\n";
-									echo "});\r\n";
-							}	 
-								else{
-								
-									echo " wx.closeWindow();\r\n";
-								  //  echo "$('body').trigger(\"customevent\");\r\n";
-								
-								}	
-							  ?>
-			});
-		</script>
+	
 		<style type="text/css">
 			body {
 				padding-top: 10px;
@@ -136,26 +101,9 @@
 		</style>
 	</head>
 
-	<body class="evaluate">
-		<?php
-	
-	if($isamdin==false)
-	{
-				echo "<script language=\"JavaScript\">\r\n";   
-         //   echo " alert(\"您不是管理员！\");\r\n";   
-		 
-		   // echo " alert(\"您不是管理员！\");\r\n";   
-       
-            echo "</script>"; 
-			echo "您不是管理员！";
-			echo "</body>";
-			echo "</html>";
-			exit;
-	}
-	
-	?>
-
-			<div class="container outerbg">
+	<body class="evaluate" style="background: url('http://www.21thkids.com/seu/src/login_background.jpg');background-size: 100% 100%;">
+		
+			<div class="container outerbg clearfix" id="content" style="">
 				<div class="innerbg row">
 					<form class="" action="design_submit.php" method="post">
 
@@ -175,39 +123,36 @@
 							</tr>
 						</table>
 					</form>
-					<div class="container" id="content" style="background: #229ffd;">
-							<div class="row">
-						<div class="col-xs-4">
-					<button href="index.html" class="button button-plain button-border button-square  "><img class="img-responsive" src="img/clipboard.png">训练</button>
-						</div>
-						<div class="col-xs-4">
-					<button class="button  button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练</button>
-						</div>
-						<div class="col-xs-4">
-							<button class="button  button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练训练训练训练</button>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-4">
-							<button class="button   button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练训练训练训练训练训练</button>
-						</div>
-						<div class="col-xs-4">
-							<button class="button   button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练训练训练训练</button>
-						</div>
-						<div class="col-xs-4">
-							<button class="button  button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png"></button>
+					<div class="container"  style="background: #229ffd;">
+						
+						<div class="row">
+							<button href="index.html" class="button button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">儿童评测</button>
+					
+					
+							<button class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">父母评测</button>
+					
+					
+							<button class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">教师评测</button>
+						
+				
+					
+							<button class="button   button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png"><span style="width: 85px;display: inline-block;">儿童发展专家评测</span></button>
+					
+					
+							<button href="boteqi.html" class="button   button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png"><span style="width: 85px;display: inline-block;">波特奇专家评测</span></button>
+					
+					
+							<button  class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">训练</button>
 						</div>
 					</div>
 
 					</div>
 				
-					<div class="clearfix"></div>
-					<div class="subreset">
-						<input class="btn btn-primary" type="submit" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-					</div>
-				</div>
+					<div class="footerhelper"></div>
+				
+				
 			</div>
-			<div class="footer">
+			<div class="footer navbar-fixed-bottom">
 				<div class="row bottom">
 					<div class="container">
 						<div class="col-sm-3 ">
@@ -259,6 +204,18 @@
 			<script src="js/jquery-1.4.2.min.js"></script>
 			<script src="js/jquery.js"></script>
 			<script src="js/bootstrap.min.js"></script>
+			<script>
+				$(document).ready(function(){
+					$('#content button').click(function(e){
+						e.preventDefault();
+						var $link=$(this).attr("href");
+						if($link){
+							window.location.href=$link;
+						}
+					});
+					
+				})
+			</script>
 
 	</body>
 

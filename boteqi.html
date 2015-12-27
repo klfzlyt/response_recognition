@@ -18,26 +18,62 @@
 		<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	</head>
 	<style>
-		#content .button-border.button-plain:hover{background-color: inherit!important;color: #fff!important;}
-		#content .button-plain:focus{background-color: inherit!important;color: #fff!important;}
-		#content .button-plain:active{background-color: rgba(0, 0, 0, 0.9);}
+		#content .button-border.button-plain:hover {
+			background: rgba(27, 154, 247, 0.7)!important;
+			color: #fff!important;
+		}
+		
+		#content .button-plain:focus {
+			background: rgba(27, 154, 247, 0.7)!important;
+			color: #fff!important;
+		}
+		
+		#content .button-border.button-plain.active {
+			background-color: #ff8300!important;
+			color: #fff!important;
+			opacity: 1;
+		}
+		
+		#content .button-border {
+			background-color: rgba(27, 154, 247, 0.7)!important;
+		}
 	</style>
-	<body>
 
-		<div class="container" style="background: #4CB0F9;" id="content">
-			<div class="btn-group" data-toggle="buttons">
-				<button class="btn btn-primary button button-plain button-border button-square">
-					<input id="test" type="checkbox" autocomplete="off" checked> Checkbox 1 (pre-checked)
-				</button>
-				<button class="btn btn-primary button button-plain button-border button-square">
-					<input id="test" type="checkbox" autocomplete="off" checked> Checkbox 1 (pre-checked)
-				</button>
-			<button class="btn btn-primary button button-plain button-border button-square">
-					<input id="test" type="checkbox" autocomplete="off" checked> Checkbox 1 (pre-checked)
-				</button>
+	<body style="background: url('http://www.21thkids.com/seu/src/login_background.jpg');background-size: 100% 100%;">
+
+		<div class="container" style="" id="content">
+			<div class="row">
+				<div class="btn-group" data-toggle="buttons">
+					<button class="btn button button-plain button-border button-square">
+						<img src="http://www.21thkids.com/seu/cuiyuan/test/img/1.jpg" class="img-circle" />
+						<input type="checkbox" autocomplete="off" checked> 社会行为
+					</button>
+					<button class="btn button button-plain button-border button-square">
+						<img src="http://www.21thkids.com/seu/cuiyuan/test/img/2.jpg" class="img-circle" />
+						<input type="checkbox" autocomplete="off" checked> 语言
+					</button>
+					<button class="btn button button-plain button-border button-square">
+						<img src="http://www.21thkids.com/seu/cuiyuan/test/img/3.jpg" class="img-circle" />
+						<input id="test" type="checkbox" autocomplete="off" checked> 生活自理
+					</button>
+					<button class="btn button button-plain button-border button-square">
+						<img src="http://www.21thkids.com/seu/cuiyuan/test/img/4.jpg" class="img-circle" />
+						<input type="checkbox" autocomplete="off" checked> 认知
+					</button>
+					<button class="btn button button-plain button-border button-square">
+						<img src="http://www.21thkids.com/seu/cuiyuan/test/img/5.jpg" class="img-circle" />
+						<input type="checkbox" autocomplete="off" checked> 运动
+					</button>
+
+				</div>
 			</div>
+			<div class="subreset">
+				<input class="btn btn-primary" type="submit" value="提交">
+			</div>
+			<div class="footerhelper"></div>
 		</div>
-		<div class="footer">
+
+		<div class="footer navbar-fixed-bottom">
 			<div class="row bottom">
 				<div class="container">
 					<div class="col-sm-3 ">

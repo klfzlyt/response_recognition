@@ -6,7 +6,10 @@
 	padding:0px;
 	margin:0px;
 }
-body { padding-top: 50px;overflow-x: hidden; overflow-y:auto;
+body {  overflow-x: hidden; overflow-y:auto;
+font-family: "微软雅黑";
+height: 100%;
+padding-bottom: 190px;
 }
 html { overflow-x:hidden; overflow-y:auto;
 }
@@ -83,6 +86,7 @@ body.evaluate{
 	font-size: 1.1em;
 	padding-bottom:10px;
 }
+
 footer .tagline{
 	padding-bottom:10px;
 	font-size: 1.3em;
@@ -130,12 +134,12 @@ footer .search{
 	padding: 50px;
 }
 .outerbg{
-	margin-bottom:35px;
-	background-color:rgba(255,255,255,0);
+	 
+ 
 }
 .innerbg{
 	min-height:150px;
-	background-color:#FFF;
+	 
 	box-shadow:#CCC 2px 2px 5px;
 }
 .innerbg form{
@@ -159,6 +163,12 @@ td {
 .nav1{
 	display:inline;
 }
-#content button.button {width: 100%;height: 70px;display: block;}
+#content button.button {width: 33.3333%;height: 90px;display: block;float:left}
 #content .col-xs-4{padding: 0;}
-#content img{max-height: 100%;display: inline;width: 40px;}
+#content img{max-height: 100%;display: block;width: 40px;margin:0 auto}
+#content .btn-group{display: block;}
+#content .button{font-family: "微软雅黑";}
+#content .button-border{line-height: 1.5;}
+.footerhelper{clear: both;}
+.footer{height: 12em;}
+.container{position:relative; min-height:100%;height: auto!important;height:100%;}
