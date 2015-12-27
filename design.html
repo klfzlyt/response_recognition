@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/bootstrap.css">
+
+		<link rel="stylesheet" href="css/buttons.css" />
+		
+	
+		<link rel="stylesheet" href="css/maintdright.css">
+		<title>个性化定制</title>
+		<script type="text/javascript" src="js/usernamecheck.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script>
+			wx.config({
+				//'scanQRCode'
+				//'closeWindow'
+				debug: false,
+				appId: '<?php echo $signPackage["appId"];?>',
+				timestamp: <?php echo $signPackage["timestamp"];?>,
+				nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+				signature: '<?php echo $signPackage["signature"];?>',
+				jsApiList: ['scanQRCode', 'closeWindow'
+					// 所有要调用的 API 都要加到这个列表中
+				]
+			});
+			wx.ready(function() {
+				// 在这里调用 API
+				<?php
+							  if($isamdin==true)
+							  {
+									echo  "wx.scanQRCode({\r\n";
+									echo "needResult:1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，\r\n";
+									echo "scanType: [\"qrCode\",\"barCode\"], // 可以指定扫二维码还是一维码，默认二者都有\r\n";
+									echo "success: function (res) {\r\n";
+									echo "var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果\r\n";
+									echo "var ob=JSON.parse(result);\r\n";
+									echo "$('#txt1').val(ob.username);}\r\n";
+									echo "});\r\n";
+							}	 
+								else{
+								
+									echo " wx.closeWindow();\r\n";
+								  //  echo "$('body').trigger(\"customevent\");\r\n";
+								
+								}	
+							  ?>
+			});
+		</script>
+		<style type="text/css">
+			body {
+				padding-top: 10px;
+			}
+			
+			td {
+				text-align: left;
+			}
+			
+			.table-title {
+				width: 57px;
+				padding-left: 15px;
+			}
+			
+			.checkbox {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+			
+			.panel-title::before {
+				content: '';
+				display: inline-block;
+				border-left: 6px solid transparent;
+				border-right: 6px solid transparent;
+				border-bottom: 6px solid #CCC;
+				position: absolute;
+				top: -7px;
+				left: 9px;
+			}
+			
+			.evaluate h1 {
+				font-size: 2em;
+			}
+			
+			.x-title {
+				color: rgb(240, 129, 0);
+				font-size: 28px;
+				margin: 10px 20px 10px 20px;
+			}
+			
+			.evaluate header {
+				min-height: 50px;
+			}
+			
+			.innerbg form {
+				padding: 0;
+				margin: 0;
+			}
+			
+			.innerbg {
+				box-shadow: none;
+			}
+			
+			.col-md-12 {
+				padding-right: 0;
+				padding-left: 0;
+			}
+			
+			.panel {
+				margin-bottom: 20px;
+				background-color: #fff;
+				border: none;
+				border-radius: 0;
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
+			
+			.panel-default {
+				border-color: #fff;
+			}
+			
+			.panel-group .panel {
+				margin-bottom: 0;
+				overflow: hidden;
+				border-radius: 0;
+			}
+			
+			.panel-heading {
+				border-bottom: 0;
+				border-top-right-radius: 0;
+				border-top-left-radius: 0;
+			}
+		</style>
+	</head>
+
+	<body class="evaluate">
+		<?php
+	
+	if($isamdin==false)
+	{
+				echo "<script language=\"JavaScript\">\r\n";   
+         //   echo " alert(\"您不是管理员！\");\r\n";   
+		 
+		   // echo " alert(\"您不是管理员！\");\r\n";   
+       
+            echo "</script>"; 
+			echo "您不是管理员！";
+			echo "</body>";
+			echo "</html>";
+			exit;
+	}
+	
+	?>
+
+			<div class="container outerbg">
+				<div class="innerbg row">
+					<form class="" action="design_submit.php" method="post">
+
+						<table class="table ">
+							<tr style="background-color:rgba(240,129,0,0.7)">
+								<td>用户</td>
+								<td>
+									<input type="text" name="username" id="txt1" onkeyup="showHint1(this.value)">
+								</td>
+
+							</tr>
+							<tr style="background-color:rgba(240,129,0,0.7)">
+								<td>日期</td>
+								<td>
+									<?php require_once('ymd.html'); ?>
+								</td>
+							</tr>
+						</table>
+					</form>
+					<div class="container" id="content" style="background: #229ffd;">
+							<div class="row">
+						<div class="col-xs-4">
+					<button href="index.html" class="button button-plain button-border button-square  "><img class="img-responsive" src="img/clipboard.png">训练</button>
+						</div>
+						<div class="col-xs-4">
+					<button class="button  button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练</button>
+						</div>
+						<div class="col-xs-4">
+							<button class="button  button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练训练训练训练</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<button class="button   button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练训练训练训练训练训练</button>
+						</div>
+						<div class="col-xs-4">
+							<button class="button   button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png">训练训练训练训练</button>
+						</div>
+						<div class="col-xs-4">
+							<button class="button  button-plain button-border button-square"><img class="img-responsive" src="img/clipboard.png"></button>
+						</div>
+					</div>
+
+					</div>
+				
+					<div class="clearfix"></div>
+					<div class="subreset">
+						<input class="btn btn-primary" type="submit" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<div class="row bottom">
+					<div class="container">
+						<div class="col-sm-3 ">
+							<ul>
+								<li>
+									<h4>儿童发展评测及干预系统</h4></li>
+								<li><a href="evaluate.html">评测</a></li>
+								<li><a href="train.html">训练</a></li>
+								<li><a href="design.html">定制</a></li>
+								<!--<li><a href="./charge/index.php">单一计费</a></li>-->
+								<li><a href="./charge/total.php">计费</a></li>
+							</ul>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-3 hidden-xs">
+							<ul>
+								<li>
+									<h4>常用链接</h4></li>
+								<li><a target="_blank" rel="external nofollow" href="select.html">主导航</a></li>
+								<li><a target="_blank" rel="external nofollow" href="http://www.cctf.org.cn/">中国儿童少年基金会</a></li>
+								<li><a target="_blank" rel="external nofollow" href="http://www.ccc.org.cn/">中国儿童中心</a></li>
+							</ul>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-3 hidden-xs">
+							<ul>
+								<li>
+									<h4>技术支持</h4></li>
+								<li><a target="_blank" rel="external nofollow" href="">江苏弘智信息科技有限公司</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-3 hidden-xs">
+							<ul>
+								<a href="">
+									<li>
+										<h4>联系我们</h4></li>
+									<li>025-85566673</li>
+									<li>baby_future@126.com</li>
+									<li>©2014 苏ICP备14034708号</li>
+									<br/>
+								</a>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script src="js/html5shiv.min.js"></script>
+			<script src="js/respond.min.js"></script>
+			<script src="js/jquery-1.4.2.min.js"></script>
+			<script src="js/jquery.js"></script>
+			<script src="js/bootstrap.min.js"></script>
+
+	</body>
+
+</html>

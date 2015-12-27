@@ -1,0 +1,134 @@
+@charset "utf-8";
+/* CSS Document */
+#report{
+	left: 10%;
+	top: 0%;
+	right: 10%;
+	position: absolute;
+	text-indent: 2em;
+	font-size: 18px;
+	line-height: 30px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-bottom: 60px;
+	padding-left: 20px;
+	border:1px #09C solid;
+}
+h1{
+	font-size: 25px;
+	color: #333;
+}
+footer{
+	font-size:14px;
+	color:#F00;
+}
+p,section{
+	color: rgb(70,129,200);
+	font-weight: bold;
+}
+span{
+	color: rgb(70,129,200);
+	font-weight: bold;
+}
+table{
+	text-indent: 0em;
+	text-align: center;
+	font-size: 16px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-top-color: #5A84D5;
+	border-right-color: #5A84D5;
+	border-bottom-color: #5A84D5;
+	border-left-color: #5A84D5;
+	margin: 20px;
+}
+th,td{
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	width: 10%;
+	}
+td.hang1{
+	color: #FFF;
+	background-color: rgba(97,129,178,0.6);
+	}
+td.hang2{
+	padding-right: 20px;
+	padding-left: 20px;
+	width: 55%;
+	text-align:left;
+	text-indent: 2em;
+	}	
+tr.hang3{
+	background-color:  rgba(250,90,40,0.2);;
+	}
+tr.hang4{
+	background-color:rgb(255,255,250);
+	}
+#qtype{
+	color: #F00;	
+}
+#score{
+	color: #F00;
+	}
+	#score{
+	color: #F00;
+	}
+#score1{
+	color: #F00;
+	}
+#score2{
+	color: #F00;
+	}
+#score3{
+	color: #F00;
+	}
+#score4{
+	color: #F00;
+	}
+#how{
+	color: #F00;
+	}	
+#level{
+	color: #F00;
+	}
+#iqlevel{
+	color: #F00;
+	}	
+#wholescore{
+	color: #F00;
+	}
+#contain,#contain1,#contain2,#contain3{
+	color: #F00;
+	}
+#barword{
+	position: absolute;
+	bottom: 45px;
+	font-weight: bold;
+	color: #F00;
+	font-size: 15px;
+	}	
+#bar{
+	font-weight: bold;
+	color: #000;
+	margin-right: 28px;
+	margin-left: 35px;
+	font-size: 15px;
+	position: relative;
+	left: 40px;
+}	
+body{
+	font-family: "微软雅黑", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+*{
+	border:none;
+	padding:0px;
+	margin:0px;
+}
+h1,section,p{
+	font-weight:500;
+	line-height:38px;
+}
