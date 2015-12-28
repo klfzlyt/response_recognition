@@ -37,6 +37,9 @@
 		#content .button-border {
 			background-color: rgba(27, 154, 247, 0.7)!important;
 		}
+			@media  screen and (min-width:768px ) {
+				#content button.button {width: 16.6666666%;height: 90px;display: block;float:left}
+			}
 	</style>
 
 	<body style="background: url('http://www.21thkids.com/seu/src/login_background.jpg');background-size: 100% 100%;">
@@ -126,7 +129,23 @@
 		<script src="js/jquery-1.4.2.min.js"></script>
 		<script src="js/jquery.js"></script>
 		<script src="js/bootstrap.min.js"></script>
-
+		<script>
+			
+				$(document).ready(function(){
+				
+					$('#content button').click(function(e){
+						e.preventDefault();
+						var $link=$(this).attr("href");
+						if($link){
+							window.location.href=$link;
+						}
+					});
+					var $bu=$('.button');
+					var bu=$bu[0].clientWidth;
+					
+					$bu.height(bu);
+				})
+		</script>
 	</body>
 
 </html>

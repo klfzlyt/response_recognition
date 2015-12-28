@@ -174,5 +174,5 @@ td {
 #content .button{font-family: "微软雅黑";}
 #content .button-border{line-height: 1.5;}
 .footerhelper{clear: both;}
-.footer{height: 160px;clear: both;margin-top:-150px}
-#content{position:relative; min-height:80%;height:auto!important; height:100%;margin-bottom: 160px;}
+.footer{height: 160px;clear: both;margin-top:-160px;clear:both}
+#content{position:relative; min-height:100%;padding-bottom: 160px;}
