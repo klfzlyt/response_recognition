@@ -8,14 +8,13 @@
 		<link rel="stylesheet" href="css/bootstrap.css">
 
 		<link rel="stylesheet" href="css/buttons.css" />
-		
-	
+
 		<link rel="stylesheet" href="css/maintdright.css">
 		<title>个性化定制</title>
 		<script type="text/javascript" src="js/usernamecheck.js"></script>
-		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
 		<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	
+
 		<style type="text/css">
 			body {
 				padding-top: 10px;
@@ -102,110 +101,103 @@
 	</head>
 
 	<body class="evaluate" style="background: url('http://www.21thkids.com/seu/src/login_background.jpg');background-size: 100% 100%;">
-		
-			<div class="container outerbg clearfix" id="content" style="">
-				<div class="innerbg row">
-					<form class="" action="design_submit.php" method="post">
 
-						<table class="table ">
-							<tr style="background-color:rgba(240,129,0,0.7)">
-								<td>用户</td>
-								<td>
-									<input type="text" name="username" id="txt1" onkeyup="showHint1(this.value)">
-								</td>
+		<div class="container outerbg clearfix" id="content" style="">
+			<div class="innerbg row">
+				<form class="" action="design_submit.php" method="post">
 
-							</tr>
-							<tr style="background-color:rgba(240,129,0,0.7)">
-								<td>日期</td>
-								<td>
-									<?php require_once('ymd.html'); ?>
-								</td>
-							</tr>
-						</table>
-					</form>
-					<div class="container"  style="background: #229ffd;">
-						
-						<div class="row">
-							<button href="index.html" class="button button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">儿童评测</button>
-					
-					
-							<button class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">父母评测</button>
-					
-					
-							<button class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">教师评测</button>
-						
-				
-					
-							<button class="button   button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png"><span style="width: 85px;display: inline-block;">儿童发展专家评测</span></button>
-					
-					
-							<button href="boteqi.html" class="button   button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png"><span style="width: 85px;display: inline-block;">波特奇专家评测</span></button>
-					
-					
-							<button  class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">训练</button>
-						</div>
+					<table class="table ">
+						<tr style="background-color:rgba(240,129,0,0.7)">
+							<td>用户</td>
+							<td>
+								<input type="text" name="username" id="txt1" onkeyup="showHint1(this.value)">
+							</td>
+
+						</tr>
+						<tr style="background-color:rgba(240,129,0,0.7)">
+							<td>日期</td>
+							<td>
+								<?php require_once('ymd.html'); ?>
+							</td>
+						</tr>
+					</table>
+				</form>
+				<div class="container" style="background: #229ffd;">
+
+					<div class="row">
+						<button href="" class="button button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">儿童评测</button>
+
+						<button class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">父母评测</button>
+
+						<button class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">教师评测</button>
+
+						<button class="button   button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png"><span style="width: 85px;display: inline-block;">儿童发展专家评测</span></button>
+
+						<button href="boteqi.html" class="button   button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png"><span style="width: 85px;display: inline-block;">波特奇专家评测</span></button>
+
+						<button class="button  button-plain button-border button-square"><img class="img-responsive img-circle" src="img/clipboard.png">训练</button>
 					</div>
+				</div>
 
-					</div>
-				
-					<div class="footerhelper"></div>
-				
-				
 			</div>
-			<div class="footer navbar-fixed-bottom">
-				<div class="row bottom">
-					<div class="container">
-						<div class="col-sm-3 ">
-							<ul>
+			<div class="footerhelper"></div>
+		</div>
+
+		<div class="footer">
+			<div class="row bottom">
+				<div class="container">
+					<div class="col-sm-3 ">
+						<ul>
+							<li>
+								<h4>儿童发展评测及干预系统</h4></li>
+							<li><a href="evaluate.html">评测</a></li>
+							<li><a href="train.html">训练</a></li>
+							<li><a href="design.html">定制</a></li>
+							<!--<li><a href="./charge/index.php">单一计费</a></li>-->
+							<li><a href="./charge/total.php">计费</a></li>
+						</ul>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-3 hidden-xs">
+						<ul>
+							<li>
+								<h4>常用链接</h4></li>
+							<li><a target="_blank" rel="external nofollow" href="select.html">主导航</a></li>
+							<li><a target="_blank" rel="external nofollow" href="http://www.cctf.org.cn/">中国儿童少年基金会</a></li>
+							<li><a target="_blank" rel="external nofollow" href="http://www.ccc.org.cn/">中国儿童中心</a></li>
+						</ul>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-3 hidden-xs">
+						<ul>
+							<li>
+								<h4>技术支持</h4></li>
+							<li><a target="_blank" rel="external nofollow" href="">江苏弘智信息科技有限公司</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-3 hidden-xs">
+						<ul>
+							<a href="">
 								<li>
-									<h4>儿童发展评测及干预系统</h4></li>
-								<li><a href="evaluate.html">评测</a></li>
-								<li><a href="train.html">训练</a></li>
-								<li><a href="design.html">定制</a></li>
-								<!--<li><a href="./charge/index.php">单一计费</a></li>-->
-								<li><a href="./charge/total.php">计费</a></li>
-							</ul>
-						</div>
-						<!-- /.col -->
-						<div class="col-sm-3 hidden-xs">
-							<ul>
-								<li>
-									<h4>常用链接</h4></li>
-								<li><a target="_blank" rel="external nofollow" href="select.html">主导航</a></li>
-								<li><a target="_blank" rel="external nofollow" href="http://www.cctf.org.cn/">中国儿童少年基金会</a></li>
-								<li><a target="_blank" rel="external nofollow" href="http://www.ccc.org.cn/">中国儿童中心</a></li>
-							</ul>
-						</div>
-						<!-- /.col -->
-						<div class="col-sm-3 hidden-xs">
-							<ul>
-								<li>
-									<h4>技术支持</h4></li>
-								<li><a target="_blank" rel="external nofollow" href="">江苏弘智信息科技有限公司</a></li>
-							</ul>
-						</div>
-						<div class="col-sm-3 hidden-xs">
-							<ul>
-								<a href="">
-									<li>
-										<h4>联系我们</h4></li>
-									<li>025-85566673</li>
-									<li>baby_future@126.com</li>
-									<li>©2014 苏ICP备14034708号</li>
-									<br/>
-								</a>
-							</ul>
-						</div>
+									<h4>联系我们</h4></li>
+								<li>025-85566673</li>
+								<li>baby_future@126.com</li>
+								<li>©2014 苏ICP备14034708号</li>
+								<br/>
+							</a>
+						</ul>
 					</div>
 				</div>
 			</div>
-			<script src="js/html5shiv.min.js"></script>
-			<script src="js/respond.min.js"></script>
-			<script src="js/jquery-1.4.2.min.js"></script>
-			<script src="js/jquery.js"></script>
-			<script src="js/bootstrap.min.js"></script>
-			<script>
-				$(document).ready(function(){
+		</div>
+
+		<script src="js/html5shiv.min.js"></script>
+		<script src="js/respond.min.js"></script>
+		<script src="js/jquery-1.4.2.min.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function(){
 					$('#content button').click(function(e){
 						e.preventDefault();
 						var $link=$(this).attr("href");
@@ -215,7 +207,7 @@
 					});
 					
 				})
-			</script>
+		</script>
 
 	</body>
 

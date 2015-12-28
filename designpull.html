@@ -1,0 +1,701 @@
+<?php
+/*
+微信校验
+define("TOKEN", "seu");
+$wechatObj = new wechatCallbackapiTest();
+$wechatObj->valid();
+class wechatCallbackapiTest
+{
+	public function valid()
+    {
+        $echoStr = $_GET["echostr"];
+
+        //valid signature , option
+        if($this->checkSignature()){
+        	echo $echoStr;
+        	exit;
+        }
+    }
+	private function checkSignature()
+	{
+        // you must define TOKEN by yourself
+        if (!defined("TOKEN")) {
+            throw new Exception('TOKEN is not defined!');
+        }
+        
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce = $_GET["nonce"];
+        		
+		$token = TOKEN;
+		$tmpArr = array($token, $timestamp, $nonce);
+        // use SORT_STRING rule
+		sort($tmpArr, SORT_STRING);
+		$tmpStr = implode( $tmpArr );
+		$tmpStr = sha1( $tmpStr );
+		
+		if( $tmpStr == $signature ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	}
+
+exit;
+*/
+?>
+
+
+
+<?php
+session_start();
+header("Content-type: text/html; charset=utf-8"); 
+include ('connect1.php');
+db::getInstance();
+   function httpGet($url) {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 500);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_URL, $url);
+
+    $res = curl_exec($curl);
+    curl_close($curl);
+
+    return $res;
+  }
+  function isweixin_admin($openid)
+{
+		$sql="select * from weixin_quanxian where openid='".$openid."' and is_admin='true'";
+	file_put_contents("file2.txt",$sql);
+		$result=mysql_query($sql);
+		$result123=mysql_num_rows($result);
+			
+		if(mysql_num_rows($result)==0)
+		{
+		file_put_contents("file3.txt",$result123);
+		return false;
+		}
+		else
+		return true;
+}
+$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+function getPostObj($postStr)
+{
+//file_put_contents("file3.txt","fdsfsdfs");
+libxml_disable_entity_loader(true);
+$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+file_put_contents("file4.txt",$postStr);
+file_put_contents("file3.txt",$postObj->ToUserName);
+return $postObj;
+}
+
+
+if($postStr!=NULL)
+{
+//处理post数据
+	
+$obj1231231=getPostObj($postStr);
+$strss=$obj1231231->Content;
+
+exit;
+}
+$isamdin=true;
+if (isset($_GET['code'])){
+   // echo $_GET['code'];
+	$codestr=$_GET['code'];
+	/*
+	httpGet
+	https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+	*/
+   $result=	httpGet('https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxe9da6859ab7c7489&secret=5a98f2b8417ee25bc955b183b4755c54&code='.$codestr.'&grant_type=authorization_code');
+   //https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+      //https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN	 
+	//echo $result;
+		$object=json_decode($result);
+		if(isweixin_admin($object->openid))
+		{
+			$_SESSION['weixin_openid']=$object->openid;		
+		}
+		else if(empty($_SESSION['weixin_openid']))
+		{
+			$isamdin=false;
+		}		
+ //$result123=httpGet('https://api.weixin.qq.com/sns/userinfo?access_token='.$object->access_token.'&openid='.$object->openid.'&lang=zh_CN');
+}
+
+else if(empty($_SESSION['weixin_openid']))
+{
+ //echo "error";
+if(empty($_SESSION['username']))
+{
+		echo "<meta http-equiv='Content-Type'' content='text/html; charset=utf-8'>";
+	 	echo "<script language=\"JavaScript\">\r\n";   
+            echo " alert(\"请正常登陆\");\r\n";   
+            echo "top.location='http://www.21thkids.com/seu/';\r\n";   
+            echo "</script>";   
+            exit; 
+	}
+	else if($_SESSION[role]!=1)
+	{
+		echo "<meta http-equiv='Content-Type'' content='text/html; charset=utf-8'>";
+	 	echo "<script language=\"JavaScript\">\r\n";   
+            echo " alert(\"亲！您不是管理员无法操作此项！\");\r\n"; 
+            echo " history.back();\r\n";   
+            echo "</script>";   
+            exit; 
+  }
+// exit;
+}
+else 
+{
+//echo $_SESSION['weixin_openid'];
+//说明是手机
+}
+
+?>
+<?php
+
+function echotxt($postObj,$content)
+	{
+	 $fromUsername = $postObj->FromUserName;
+	   $textTpl = "<xml>
+							<ToUserName><![CDATA[%s]]></ToUserName>
+							<FromUserName><![CDATA[%s]]></FromUserName>
+							<CreateTime>%s</CreateTime>
+							<MsgType><![CDATA[%s]]></MsgType>
+							<Content><![CDATA[%s]]></Content>
+							<FuncFlag>0</FuncFlag>
+							</xml>";  
+							$toUsername = $postObj->ToUserName;$time = time();
+							$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, "text", $content);
+							echo $resultStr;
+	}
+/*session_start();
+
+$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+if($postStr!=NULL)
+{
+	file_put_contents("file1.txt","$postStr");
+	$obj=getPostObj();
+	if(isweixin_admin($obj->FromUserName))
+	{
+		$_SESSION['weixin_openid']=$obj->FromUserName;
+	}
+	else
+	{
+	
+	}
+}*/
+?>
+<?php
+require_once "jssdk.php";
+$jssdk = new JSSDK("wxe9da6859ab7c7489", "5a98f2b8417ee25bc955b183b4755c54");
+$signPackage = $jssdk->GetSignPackage();
+//摄像头二维码
+?>
+
+	<!doctype html>
+	<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/maintdright.css">
+		<title>训练的个性化定制</title>
+		<script type="text/javascript" src="js/usernamecheck.js">
+		</script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		 <script>
+ 
+  wx.config({
+  //'scanQRCode'
+  
+  //'closeWindow'
+    debug: false,
+    appId: '<?php echo $signPackage["appId"];?>',
+    timestamp: <?php echo $signPackage["timestamp"];?>,
+    nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+    signature: '<?php echo $signPackage["signature"];?>',
+    jsApiList: ['scanQRCode','closeWindow'
+      // 所有要调用的 API 都要加到这个列表中
+    ]
+  });
+  
+ 
+  
+ 
+  wx.ready(function () {
+    // 在这里调用 API
+     
+	  <?php
+	  if($isamdin==true)
+	  {
+			echo  "wx.scanQRCode({\r\n";
+			echo "needResult:1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，\r\n";
+			echo "scanType: [\"qrCode\",\"barCode\"], // 可以指定扫二维码还是一维码，默认二者都有\r\n";
+			echo "success: function (res) {\r\n";
+			echo "var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果\r\n";
+			echo "var ob=JSON.parse(result);\r\n";
+			echo "$('#txt1').val(ob.username);}\r\n";
+			echo "});\r\n";
+	}	 
+		else{
+		
+			echo " wx.closeWindow();\r\n";
+		  //  echo "$('body').trigger(\"customevent\");\r\n";
+		
+		}	
+	  ?>
+    
+  });
+  	
+  </script>
+	</head>
+	<body class="evaluate">
+	<?php
+	
+	if($isamdin==false)
+	{
+				echo "<script language=\"JavaScript\">\r\n";   
+         //   echo " alert(\"您不是管理员！\");\r\n";   
+		 
+		   // echo " alert(\"您不是管理员！\");\r\n";   
+       
+            echo "</script>"; 
+			echo "您不是管理员！";
+			echo "</body>";
+			echo "</html>";
+			exit;
+	}
+	
+	?>
+		<section>
+			<div class="container">
+				<header>
+					<img src="src/evaluate.png">
+					<h1>训练的个性化定制</h1>
+					<p>个性化定制针对儿童的训练结果，定制下一步的训练计划~</p>
+				</header>
+			</div>
+			<div class="container outerbg">
+			<div class="innerbg row">
+			<form  class="" action="submitandroidpull.php" method="post">
+			<h2 style="color:rgb(240,129,0) ;">信息填写</h2>
+          	<table class="table ">
+          		<tr style="background-color:rgba(240,129,0,0.7)" >
+          			<td>用户</td>
+          			<td ><input  type="text" name="username" id="txt1" onkeyup="showHint1(this.value)"></td>
+          			<td><span id="txtHint"></span></td>
+          		</tr>
+				<tr style="background-color:rgba(240,129,0,0.7)">
+				    <td>日期</td>
+          			<td><?php require_once('ymd.html'); ?></td>
+				</tr>
+          	</table>
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			
+			<div class="panel panel-default col-md-12">
+			    <div class="panel-heading" role="tab" id="headingOne">
+			        <h4 class="panel-title"> 
+			           <a  class ="collapsed" data-toggle="collapse"   href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">儿童评测
+					   </a>
+					</h4>
+			    </div>
+			    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						<input class="checkbox0" name ="a06"  type="checkbox" value="1">注意力
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="a02"  type="checkbox" value="1">短时记忆
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="a03"  type="checkbox" value="1">工作记忆
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="a07"  type="checkbox" value="1">抑制能力
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="a04"  type="checkbox" value="1">认知灵活性一
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="a05"  type="checkbox" value="1">认知灵活性二
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="a09"  type="checkbox" value="1">计划
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="a00"  type="checkbox" value="1">New Stroop
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="eva10"  type="checkbox" value="1">面部表情识别
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="eva11"  type="checkbox" value="1">影像人物情绪识别
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="eva12"  type="checkbox" value="1">自我控制
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="eva30"  type="checkbox" value="1">智力测验
+					</div>
+					<div class="panel-body">
+						<input class="checkbox0" name ="eva14"  type="checkbox" value="1">社会决策
+					</div>
+			    </div>
+			</div>
+			
+			<div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="headingTwo">
+					<h4 class="panel-title">
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">家长评测
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">儿童气质量表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">感统量表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">Achenbach量表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">Conners量表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">社交反应量表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">本底能力评估
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">孤独症行为评估
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">同感能力能力评估
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">社会技能
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="a20"  type="checkbox" value="1">创造力倾向
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="heading_Three">
+					<h4 class="panel-title">
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapse_Three" aria-expanded="false" aria-controls="collapse_Three">教师评测
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapse_Three" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0" name ="eva50"  type="checkbox" value="1">儿童康复日常生活活动记录表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" name ="eva51"  type="checkbox" value="1">ADL形成性评测
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="heading_Four">
+					<h4 class="panel-title">
+					    <input type="checkbox" name ="a49" class="checkbox0" value="1"/>
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapse_Four" aria-expanded="false" aria-controls="collapse_Four">专家评测
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapse_Four" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童感知评估表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童粗大动作评估表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童精细动作评估表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童语言与沟通评估表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童认知评估表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童社会交往评估表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童生活自理评估表
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >儿童情绪与行为评估表
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+            <div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="headingTwo">
+					<h4 class="panel-title">
+					    <input type="checkbox"  name="eeg" value="1" class="checkbox0"/>
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">脑电反馈
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0" >莲花开
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0"  >使命召唤
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >家务小能手
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0"  >村庄保卫战
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0"   >花园正能量
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0"  >举重
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0"  >阿凡达
+					</div>	
+				</div>
+			</div>
+
+			<div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="headingTwo">
+					<h4 class="panel-title">
+					    <input type="checkbox" name="exe" value="1"  class="checkbox0"/>
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">执行功能
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0" >小小服务员
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >打地鼠
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >妈妈小助手
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >鹰之眼
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >数字排序
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >卡片分类
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >猜猜他是谁
+					</div>	
+					<div class="panel-body">
+					    <input class="checkbox0" >记忆抓小偷
+					</div>	
+					<div class="panel-body">
+					    <input class="checkbox0" >热心小乌龟
+					</div>	
+					<div class="panel-body">
+					    <input class="checkbox0" >快速拍照
+					</div>	
+					<div class="panel-body">
+					    <input class="checkbox0" >海豚游戏
+					</div>	
+					<div class="panel-body">
+					    <input class="checkbox0" >保持平衡
+					</div>	
+					<div class="panel-body">
+					    <input class="checkbox0" >选择正确的颜色
+					</div>	
+				</div>
+			</div>
+			<div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="headingFive">
+					<h4 class="panel-title">
+					    <input type="checkbox" name ="a47" value="1" class="checkbox0"/>
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapseFive" aria-expanded="false" aria-controls="collapseTwo">行为控制训练系统
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0" >鹰之眼
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >序列记忆
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >stroop测试
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >卡片分类
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >计划
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >农场
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="headingFive">
+					<h4 class="panel-title">
+					    <input type="checkbox" name ="a48" value="1" class="checkbox0"/>
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapseSix" aria-expanded="false" aria-controls="collapseTwo">工作记忆训练系统
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0" >找水果
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >水果连连看
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >活动记忆
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >工作记忆
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >序列记忆
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0" >鹰之眼
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-default col-md-12">
+				<div class="panel-heading" role="tab" id="headingFive">
+					<h4 class="panel-title">
+					    <input type="checkbox" name="emo" value="1" class="checkbox0"/>
+				        <a class="collapsed"  data-toggle="collapse"  href="#collapseSeven" aria-expanded="false" aria-controls="collapseTwo">社会情绪能力
+				        </a>
+				    </h4>
+				</div>
+				<div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+					    <input class="checkbox0">面部表情识别训练系统
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0">动态表情识别
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0">海豚
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0">情绪gonogo
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0">联合注意训练
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0">找我
+					</div>
+					<div class="panel-body">
+					    <input class="checkbox0">合作能力训练
+					</div>
+				</div>
+			</div>
+			
+			</div>
+			<div class="subreset">
+                <input class="btn btn-primary" type="submit" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+			</form>
+			</div>
+
+			</div>
+			</div>
+
+			</div>
+			</div>
+			</div>
+		</section>
+
+		<div class="footer">
+			<div class="row bottom">
+				<div class="container">
+					<div class="col-sm-3 hidden-xs">
+						<ul>
+							<li>
+								<h4>儿童发展评测及干预系统</h4></li>
+							<li><a href="evaluate.html">评测</a></li>
+							<li><a href="train.html">训练</a></li>
+							<li><a href="design.html">定制</a></li>
+							<li><a href="./charge/design.html">定制</a></li>
+						</ul>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-3 hidden-xs">
+						<ul>
+							<li>
+								<h4>常用链接</h4></li>
+							<li><a target="_blank" rel="external nofollow" href="select.html">主导航</a></li>
+							<li><a target="_blank" rel="external nofollow" href="http://www.cctf.org.cn/">中国儿童少年基金会</a></li>
+							<li><a target="_blank" rel="external nofollow" href="http://www.ccc.org.cn/">中国儿童中心</a></li>
+						</ul>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-3 hidden-xs">
+						<ul>
+							<li>
+								<h4>技术支持</h4></li>
+							<li><a target="_blank" rel="external nofollow" href="">南京贝蕾鸿途教育科技有限公司</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-3">
+						<ul>
+							<a href="">
+								<li>
+									<h4>联系我们</h4></li>
+								<li>025-85566673</li>
+								<li>baby_future@126.com</li>
+								<li>©2014 苏ICP备14034708号</li>
+								<br/>
+							</a>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/html5shiv.min.js"></script>
+		<script src="js/respond.min.js"></script>
+		<script src="js/jquery-1.4.2.min.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+			 </body>
+			</html >
